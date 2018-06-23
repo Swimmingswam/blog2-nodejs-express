@@ -1,0 +1,51 @@
+{% extends 'layout.html' %} {% block content %}
+<script src="public/js/index.js"></script>
+<section class="context">
+    {% for content in contents%}
+    <article class="article">
+        <h2>{{content.title}}</h2>
+        <div class="author">
+            作者{{content.user.username}} 日期：{{content.addTime|date('Y年m月d日 H:i:s',-8*60)}} 阅读{{content.views}} 评论{{content.comments.length}}
+        </div>
+        <div class="content">
+            {{content.description}}
+        </div>
+        <div class="btn">
+            <a href="/views?contentid={{content.id.toString()}}">阅读全文</a>
+        </div>
+    </article>
+    {% endfor %}
+</section>
+{% endblock %}
+{% block page %}
+<nav aria-label="...">
+    <ul class="pager">
+        <li class="previous">
+            {% if page
+            <=1 %} <a href="#">
+                没有上一页了
+                </a>
+                {% else %}
+                <a href="/?catagory={{category}}&page={{page-1}}">
+                    <span aria-hidden="true">&larr;</span>上一页
+                </a>
+                {% endif %}
+
+        </li>
+        {% if pages > 0%}
+        <li>{{page}}/{{pages}}</li>
+        {% else %} {% endif %}
+        <li class="next">
+            {% if page >= pages%}
+            <a href="#">
+                没有下一页了
+            </a>
+            {% else %}
+            <a href="/?catagory={{category}}&page={{page+1}}">下一页
+                <span aria-hidden="true">&rarr;</span>
+            </a>
+            {% endif %}
+        </li>
+    </ul>
+</nav>
+{% endblock %}

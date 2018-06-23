@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="public/js/jquery-3.3.1.min.js"></script>
+   
+    <link rel="stylesheet" href="/public/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/public/css/bootstrap-theme.min.css">
+    <script src="/public/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="public/css/index.css">
+</head>
+
+<body>
+    <div class="top"></div>
+    <img src="public/images/topbanner.jpg" alt="" class="topbanner">
+    </div>
+    <nav class="nav">
+        <ul class="navul">
+            {% if category == ''%}
+            <li class="navitem">
+                    <a href="/" style="border-bottom:5px solid yellow;padding-bottom:5px;">首页Home</a>
+            </li>
+            {% else %}
+            <li class="navitem">
+                    <a href="/" >首页Home</a>
+            </li>
+            {% endif %}
+            
+            {% for cate in categorys %}
+                {% if category == cate.id.toString() %}
+                <li class="navitem">
+                        <a href="/?category={{cate.id.toString()}}" style="border-bottom:5px solid yellow;padding-bottom:5px;">{{cate.name}}</a>
+                    </li>
+                {% else %}
+                <li class="navitem">
+                        <a href="/?category={{cate.id.toString()}}">{{cate.name}}</a>
+                    </li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+    </nav>
+    <div class="body">
+        <div class="w">
+            {% block content %}{% endblock %}
+            <section class="side">
+                {% if userinfo._id %}
+                <article class="article" id="userinfo">
+                    <h2>用户信息</h2>
+                    <div class="content">
+                        <ul>
+                            <li>
+                                你好，
+                                <span class="username">{{userinfo.username}}</span>
+                            </li>
+                            {% if userinfo.isadmin %}
+                            <li id="info">欢迎，管理员
+                                <a href="/admin">进入管理</a>
+                            </li>
+                            {% else %}
+                            <li>
+                                <span>欢迎!</span>
+                            </li>
+                            {% endif %}
+                            <li id="loginout">
+                                <a href="#">退出登录</a>
+                            </li>
+                        </ul>
+                    </div>
+                </article>
+                {% else %}
+                <article class="article" id="login">
+                    <h2>登录</h1>
+                        <div class="content">
+                            <legend>
+                                <label for="">
+                                    <span>用户名：</span>
+                                    <input type="text" name="username">
+                                </label>
+                                <label for="">
+                                    <span>密码：</span>
+                                    <input type="password" name="password">
+                                </label>
+                                <button>登录</button>
+                            </legend>
+                            <p>
+                                <a href="">未有账户？先注册</a>
+                            </p>
+                            <p id="info"></p>
+                        </div>
+                </article>
+                <article class="article hide" id="register">
+                    <h2>注册</h1>
+                        <div class="content">
+                            <legend>
+                                <label for="">
+                                    <span>用户名：</span>
+                                    <input type="text" name="username">
+                                </label>
+                                <label for="">
+                                    <span>密码：</span>
+                                    <input type="password" name="password">
+                                </label>
+                                <label for="">
+                                    <span>重复密码：</span>
+                                    <input type="password" name="repassword">
+                                </label>
+                                <button>注册</button>
+                            </legend>
+                            <p>
+                                <a href="">已有账户？马上登录</a>
+                            </p>
+                            <p id="info"></p>
+                        </div>
+                </article>
+                {%endif%}
+                <article class="article" id="socity">
+                    <h2>社区</h2>
+                    <div class="content">
+                        <ul>
+                            <li>
+                                <a href="">话题一</a>
+                            </li>
+                            <li>
+                                <a href="">话题二</a>
+                            </li>
+                            <li>
+                                <a href="">话题三</a>
+                            </li>
+                        </ul>
+                    </div>
+                </article>
+            </section>
+        </div>
+    </div>
+    
+    {% block page %}{% endblock %}
+
+</body>
+
+</html>

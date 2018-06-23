@@ -1,0 +1,62 @@
+{% extends 'layout.html' %} {% block content %}
+<section class="context">
+    <article class="article">
+        <h2>{{content.title}}</h2>
+        <div class="author">
+            作者{{content.user.username}} 日期：{{content.addTime|date('Y年m月d日 H:i:s',-8*60)}} 阅读{{content.views}} 评论{{content.comments.length}}
+        </div>
+        <div class="content">
+            {{content.description}}
+        </div>
+        <div class="btn">
+            {{content.content}}
+        </div>
+    </article>
+</section>
+<section class="comments">
+    <h3>评论
+        <span>一共有
+            <span id="commentscount">0</span>条评论</span>
+    </h3>
+    {% if userinfo._id %}
+    <span>amoise</span>
+    <span id="error"></span>
+    <div class="commentbody">
+        <textarea name="content" id="commentcontent" cols="30" rows="5"></textarea>
+        <input type="hidden" id="commentid" value="{{content._id.toString()}}">
+        <button id="submit">提交</button>
+    </div>
+    {% else %}
+    <div class="toaw">
+        您还没有登录，请先登录！
+    </div>
+    {% endif %}
+    <div>
+        <ul id="comment">
+            
+        </ul>
+        {% if content.comments.length >0%}
+        <nav aria-label="...">
+                <ul class="pager" id="pageul">
+                    <li class="previous">                   
+                        <a href="#">
+                            上一页
+                        </a>                 
+                    </li>              
+                    <li>1/1</li>
+                    <li class="next">
+                        <a href="#">下一页</a>
+                    </li>
+                </ul>
+            </nav>
+            {% endif %}
+    </div>
+    <!-- <p>还没有留言</p>
+    <ul>
+        <li>
+            <h4>admin      <span>2018/6/21 12:37:01</span></h4>
+            <p>hahahhahahahahahlalalall</p>
+        </li>
+    </ul> -->
+</section>
+<script src="public/js/comment.js"></script> {% endblock %}
